@@ -1,7 +1,7 @@
 import flask
 import pymysql
 import config
-import urandom
+import os
 
 app = flask.Flask("shortlinkSystem", static_url_path="/public", static_folder="web/public", template_folder="web/templates")
 
@@ -46,7 +46,7 @@ def create_shortlink(longlink, email, delay):
     )
 
     cursor = db.cursor()
-    shortlink = urandom(2).hex()
+    shortlink = os.urandom(2).hex()
     
     valid = False
     while valid != True:
@@ -54,7 +54,7 @@ def create_shortlink(longlink, email, delay):
         rows = cursor.fetchall()
         if len(rows) > 0:
             valid = False
-            shortlink = urandom(2).hex()
+            shortlink = os.urandom(2).hex()
         else:
             valid = True
 
