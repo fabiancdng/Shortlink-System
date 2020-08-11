@@ -9,23 +9,24 @@
 <body>
     {% if link != "error" %}
         <meta http-equiv="refresh" content="{{ link['delay'] }}; URL={{ link['redirect'] }}">
-        <div class="row" style="margin-top: 50px;">
-            <div class="col-sm-12 col-md-3"></div>
-            <div class="alert alert-success col-sm-12 col-md-6" role="alert">
-                <h4 class="alert-heading">Redirecting...</h4>
-                <p>You'll be redirected automatically.</p>
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+        <div style="margin-top: 50px;">
+            <div class="jumbotron jumbotron-fluid" style="margin-top: 50px;">
+                <div class="container">
+                    <h1 class="display-4">Redirecting...</h1>
+                    <p class="lead">You'll be redirected automatically after the delay has expired.</p>
+                    <hr>
+                    {% if link["delay"] != 0 %}
+                        <p class="mb-0">This link has a delay of {{ link['delay'] }} seconds.</p>
+                        <hr>
+                        <div class="progress">
+                            <div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0.1%"></div>
+                        </div>
+                    {% else %}
+                        <p class="mb-0"><b>Still not redirected?</b> Click <a href="{{ link['redirect'] }}">here</a>.</p>
+                    {% endif %}
                 </div>
-                <hr>
-                {% if link["delay"] != 0 %}
-                    <p class="mb-0"><b>This link has a delay of {{ link['delay'] }} seconds.</b></p>
-                {% else %}
-                    <p class="mb-0"><b>Still not redirected?</b> Click <a href="{{ link['redirect'] }}">here</a>.</p>
-                {% endif %}
             </div>
-            <div class="col-sm-12 col-md-3"></div>
-        </div>
+
     {% else %}
     <div class="row" style="margin-top: 50px;">
         <div class="col-sm-12 col-md-3"></div>
@@ -39,5 +40,20 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    {% if link["delay"] != 0 %}
+        <script>
+            $(() => {
+                let delay = {{ link['delay'] }};
+                let seconds = 1;
+                let percentage = 0;
+
+                setInterval(() => {
+                    seconds += 0.1;
+                    percentage = ( (seconds/delay) * 100);
+                    $("#progress").css("width", percentage+"%");
+                }, 100);
+            });
+        </script>
+    {% endif %}
 </body>
 </html>

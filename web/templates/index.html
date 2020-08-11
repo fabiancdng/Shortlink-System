@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL-Shortener</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        .container {
+            max-width: none !important;
+        }
+    </style>
     <script>
         function copy_manually(url) {
             var textArea = document.createElement("textarea");
@@ -52,10 +57,10 @@
     </script>
 </head>
 <body>
-    <div class="row">
+    <div class="row container">
         <div class="col-sm-12 col-md-2"></div>
         <div class="col-sm-12 col-md-8" style="margin-top: 30px;">
-            <h1 style="text-align: center;">Create a shortlink</h1>
+            <h1 style="text-align: center;">Shorten your links.</h1>
             <div class="form-group input-group-lg">
                 <input type="url" placeholder="Paste your URL here." class="form-control" id="urlInput" required>
                 <small id="urlInputHelp" class="form-text text-muted">After you hit "submit", we'll create a shortlink that redirects to your URL.</small>

@@ -1,5 +1,6 @@
 import flask
 import pymysql
+import datetime
 import config
 import os
 
@@ -25,6 +26,7 @@ def get_shortlink(shortlink):
         link["redirect"] = row[2]
         link["email"] = row[3]
         link["delay"] = row[4]
+        link["created"] = row[5]
 
     if link != {}:
         return link
@@ -58,7 +60,8 @@ def create_shortlink(longlink, email, delay):
         else:
             valid = True
 
-    cursor.execute("INSERT INTO shortlinks VALUES (0, %s, %s, %s, %s)", (shortlink, longlink, email, delay))
+    dt = str(datetime.datetime.now()).split(".")[0]
+    cursor.execute("INSERT INTO shortlinks VALUES (0, %s, %s, %s, %s, %s)", (shortlink, longlink, email, delay, dt))
     db.commit()
 
     return shortlink
