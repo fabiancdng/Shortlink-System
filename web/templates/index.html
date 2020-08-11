@@ -67,9 +67,9 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-12 col-md-6">
-                    <label for="emailInput">Your email address (optional)</label>
-                    <input type="email" class="form-control" id="emailInput" aria-describedby="emailInputHelp">
-                    <small id="emailInputHelp" class="form-text text-muted">If you want to be able to modify or delete your shortlink after the creation, you must enter your email address here.</small>
+                    <label for="secretInput">Secret (optional)</label>
+                    <input type="text" class="form-control" id="secretInput" aria-describedby="secretInputHelp">
+                    <small id="secretInputHelp" class="form-text text-muted">You can enter a word or small phrase here, if you'd like to be able to modify or delete the shortlink later.</small>
                 </div>
                 <div class="form-group col-sm-12 col-md-6">
                     <label for="delayInput">Delay</label>
@@ -106,7 +106,7 @@
 
         function short() {
             let longlink = $("#urlInput").val();
-            let email = $("#emailInput").val();
+            let secret = $("#secretInput").val();
             let delay = $("#delayInput").val();
 
             if(!longlink.includes("https://") && !longlink.includes("http://") || !longlink.includes(".")) {
@@ -124,7 +124,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({longlink: longlink, email: email, delay: delay})
+                body: JSON.stringify({longlink: longlink, secret: secret, delay: delay})
             })
                 .then(res => res.text())
                 .then(res => {
