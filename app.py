@@ -1,9 +1,9 @@
 import flask
 import pymysql
 import config
-import secrets
+import urandom
 
-app = flask.Flask("shortlink-system", static_url_path="/public", static_folder="web/public", template_folder="web/templates")
+app = flask.Flask("shortlinkSystem", static_url_path="/public", static_folder="web/public", template_folder="web/templates")
 
 def get_shortlink(shortlink):
     db = pymysql.connect(
@@ -46,7 +46,7 @@ def create_shortlink(longlink, email, delay):
     )
 
     cursor = db.cursor()
-    shortlink = secrets.token_hex(2)
+    shortlink = urandom(2).hex()
     
     valid = False
     while valid != True:
@@ -54,7 +54,7 @@ def create_shortlink(longlink, email, delay):
         rows = cursor.fetchall()
         if len(rows) > 0:
             valid = False
-            shortlink = secrets.token_hex(2)
+            shortlink = urandom(2).hex()
         else:
             valid = True
 
@@ -85,4 +85,5 @@ def create():
     params = flask.request.get_json()
     return create_shortlink(longlink=params["longlink"], email=params["email"], delay=params["delay"])
 
-app.run("127.0.0.1", 2700)
+if __name__ == "__main__":
+    app.run("127.0.0.1", 2700)
