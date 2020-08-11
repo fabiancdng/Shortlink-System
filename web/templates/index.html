@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="delayInput">Delay</label>
-                <input type="number" class="form-control" id="delayInput" aria-describedby="delayInputHelp">
+                <input type="number" value="0" class="form-control" id="delayInput" aria-describedby="delayInputHelp">
                 <small id="delayInputHelp" class="form-text text-muted">The time (in seconds) the page waits until it redirects the user to your URL.</small>
                 <button onclick="short();" type="submit" style="margin-top: 10px;" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#awaitingLinkModal">Submit</button>
             </div>
@@ -49,12 +49,12 @@
 
             if(!longlink.includes("https://") && !longlink.includes("http://") || !longlink.includes(".")) {
                 alert("Please enter a valid URL (must include 'https://' or 'http://').");
-                return;
+                location.reload();
             }
 
             if(!delay.match(/^\d+$/)) {
                 alert("Please enter a valid delay (only numbers)!");
-                return;
+                location.reload();
             }
 
             fetch(`/api/create`, {
