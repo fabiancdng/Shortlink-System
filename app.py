@@ -24,8 +24,8 @@ def get_shortlink(shortlink):
         link["id"] = row[0]
         link["short"] = row[1]
         link["redirect"] = row[2]
-        link["delay"] = row[4]
-        link["created"] = row[5]
+        link["delay"] = row[3]
+        link["created"] = row[4]
 
     if link != {}:
         return link
@@ -80,7 +80,8 @@ def short(shortlink):
 
 @app.route("/api/get/<shortlink>")
 def get(shortlink):
-    return get_shortlink(shortlink=shortlink)
+    link = get_shortlink(shortlink=shortlink)
+    return link
 
 @app.route("/api/create", methods=["POST"])
 def create():

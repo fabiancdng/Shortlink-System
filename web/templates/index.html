@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL-Shortener</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <style>
-        .container {
-            max-width: none !important;
-        }
-    </style>
     <script>
         function copy_manually(url) {
             var textArea = document.createElement("textarea");
@@ -57,25 +52,30 @@
     </script>
 </head>
 <body>
-    <div class="row container">
+    <div class="row" style="padding: 15px;">
         <div class="col-sm-12 col-md-2"></div>
         <div class="col-sm-12 col-md-8" style="margin-top: 30px;">
-            <h1 style="text-align: center;">Shorten your links.</h1>
+            <h1 style="text-align: center; margin-bottom: 30px;">Shorten your links.</h1>
             <div class="form-group input-group-lg">
                 <input type="url" placeholder="Paste your URL here." class="form-control" id="urlInput" required>
-                <small id="urlInputHelp" class="form-text text-muted">After you hit "submit", we'll create a shortlink that redirects to your URL.</small>
             </div>
             <div class="row">
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="secretInput">Secret (optional)</label>
-                    <input type="text" class="form-control" id="secretInput" aria-describedby="secretInputHelp">
-                    <small id="secretInputHelp" class="form-text text-muted">You can enter a word or small phrase here, if you'd like to be able to modify or delete the shortlink later.</small>
+
+                <div class="col-sm-12 col-md-3"></div>
+                <div class="col-sm-12 col-md-6">
+                    <button class="btn btn-block btn-link" type="button" data-toggle="collapse" data-target="#moreOptions" aria-expanded="false" aria-controls="moreOptions">More options</button>
+                    <div class="collapse" id="moreOptions">
+                        <div class="card card-body">
+                            <div class="form-group">
+                                <label for="delayInput">Delay</label>
+                                <input type="number" value="0" class="form-control" id="delayInput" aria-describedby="delayInputHelp">
+                                <small id="delayInputHelp" class="form-text text-muted">The time (in seconds) the page waits until it redirects the user to your URL.</small>
+                            </div>
+                        </div>
+                      </div>
                 </div>
-                <div class="form-group col-sm-12 col-md-6">
-                    <label for="delayInput">Delay</label>
-                    <input type="number" value="0" class="form-control" id="delayInput" aria-describedby="delayInputHelp">
-                    <small id="delayInputHelp" class="form-text text-muted">The time (in seconds) the page waits until it redirects the user to your URL.</small>
-                </div>
+                <div class="col-sm-12 col-md-3"></div>
+
                 <div class="col-sm-12 col-md-3"></div>
                 <div class="col-sm-12 col-md-6">
                     <button onclick="short();" type="submit" style="margin-top: 10px;" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#awaitingLinkModal">Submit</button>
@@ -130,8 +130,8 @@
                 .then(res => {
                     console.log(res);
                     let showlink = location.href.replace("https://", "").replace("http://", "") + res
-                    $("#awaitingLinkModal .modal-header").html('<h5 class="text-success modal-title">✅ Your shortlink is ready!</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
-                    $("#awaitingLinkModal .modal-dialog .modal-content").append(`
+                    $("#awaitingLinkModal .modal-dialog .modal-content").html(`
+                        <div class="modal-header"><h5 class="text-success modal-title">✅ Your shortlink is ready!</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
                         <div class="modal-body input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon">🔗</span>
