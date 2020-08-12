@@ -24,7 +24,6 @@ def get_shortlink(shortlink):
         link["id"] = row[0]
         link["short"] = row[1]
         link["redirect"] = row[2]
-        link["secret"] = row[3]
         link["delay"] = row[4]
         link["created"] = row[5]
 
@@ -33,7 +32,7 @@ def get_shortlink(shortlink):
     else:
         return "error"
 
-def create_shortlink(longlink, secret, delay):
+def create_shortlink(longlink, delay):
     if not longlink.__contains__("https://") and not longlink.__contains__("http://") or not longlink.__contains__("."):
         return "invalid longlink"
     
@@ -61,7 +60,7 @@ def create_shortlink(longlink, secret, delay):
             valid = True
 
     dt = str(datetime.datetime.now()).split(".")[0]
-    cursor.execute("INSERT INTO shortlinks VALUES (0, %s, %s, %s, %s, %s)", (shortlink, longlink, secret, delay, dt))
+    cursor.execute("INSERT INTO shortlinks VALUES (0, %s, %s, %s, %s)", (shortlink, longlink, delay, dt))
     db.commit()
 
     return shortlink
@@ -86,7 +85,7 @@ def get(shortlink):
 @app.route("/api/create", methods=["POST"])
 def create():
     params = flask.request.get_json()
-    return create_shortlink(longlink=params["longlink"], secret=params["secret"], delay=params["delay"])
+    return create_shortlink(longlink=params["longlink"], delay=params["delay"])
 
 if __name__ == "__main__":
     app.run("127.0.0.1", 2700)
