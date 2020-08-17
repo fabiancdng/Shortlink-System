@@ -69,7 +69,15 @@ def create_shortlink(longlink, delay):
 
 @app.route("/")
 def index():
-    return flask.render_template("index.html")
+    return flask.redirect(config.mainPage)
+
+@app.route("/admin")
+def admin():
+    params = flask.request.args
+    if params["token"] == config.adminToken:
+        return flask.render_template("index.html")
+    else:
+        return "Wrong token."
 
 @app.route("/<shortlink>")
 def short(shortlink):
