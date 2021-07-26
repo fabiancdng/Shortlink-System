@@ -16,6 +16,14 @@ Please visit [https://github.com/fabiancdng/Shortinator](https://github.com/fabi
 ![Screenshot of shortlink delay page](.media/shortlink-system-delay-page.png)
 
 ## Deployment
+### Config file
+Rename `config.template.py` to `config.py` and specify your settings in that file.
+
+### Testing/trying out the app
+You can run the app.py using `python3 app.py` or `python app.py` for development or testing purposes.
+Keep in mind that doing so is not a proper way of deploying it for production use.
+
+### Deploying the web app
 Although a Flask app comes with a built-in development server, you shouldn't use that in production.
 
 A proper way to deploy a Flask app would, for instance, be [Apache and mod_wsgi](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps) or [standalone WSGI containers like Gunicorn or Gevent](https://flask.palletsprojects.com/en/2.0.x/deploying/wsgi-standalone/#gunicorn).
