@@ -2,7 +2,7 @@
 ### A minimalist, self-hosted URL-shortener service for managing shortlinks.
 
 #### ⚠️ This is no longer used or maintained. Hence, ***I do not recommend using this in production!***
-However, I created a [successor](https://github.com/fabiancdng/Shortinator) of this software that is far more secure and has many more features.
+However, I created a [successor](https://github.com/fabiancdng/Shortinator) of this software that is up to date and has many more features.
 
 Please visit [https://github.com/fabiancdng/Shortinator](https://github.com/fabiancdng/Shortinator).
 
@@ -62,3 +62,5 @@ The response looks like this (using the example above):
     "short": "1d03"
 }
 ```
+
+**Copyright (c) 2021 Fabian Reinders**
