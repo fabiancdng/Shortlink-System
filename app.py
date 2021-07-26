@@ -6,12 +6,28 @@ import os
 
 app = flask.Flask("shortlinkSystem", static_url_path="/public", static_folder="web/public", template_folder="web/templates")
 
+def prepare_database():
+    db = pymysql.connect(
+        host=config.mysql["host"],
+        user=config.mysql["user"],
+        password=config.mysql["password"],
+        database=config.mysql["db"]
+    )
+    
+    table_sql = "CREATE TABLE IF NOT EXISTS `shortlinks` (`id` bigint(20) NOT NULL, `short` varchar(10) NOT NULL, `longlink` varchar(500) NOT NULL, `delay` int(11), `created` datetime NOT NULL, PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
+
+    cursor = db.cursor()
+    # Creates the table for shortlinks
+    cursor.execute(table_sql)
+    # Turn on auto increment
+    cursor.execute("ALTER TABLE `shortlinks` MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;")
+
 def get_shortlink(shortlink):
     db = pymysql.connect(
-        config.mysql["host"],
-        config.mysql["user"],
-        config.mysql["password"],
-        config.mysql["db"]
+        host=config.mysql["host"],
+        user=config.mysql["user"],
+        password=config.mysql["password"],
+        database=config.mysql["db"]
     )
     
     cursor = db.cursor()
@@ -40,10 +56,10 @@ def create_shortlink(longlink, delay):
         return "invalid delay"
 
     db = pymysql.connect(
-        config.mysql["host"],
-        config.mysql["user"],
-        config.mysql["password"],
-        config.mysql["db"]
+        host=config.mysql["host"],
+        user=config.mysql["user"],
+        password=config.mysql["password"],
+        database=config.mysql["db"]
     )
 
     cursor = db.cursor()
@@ -65,7 +81,7 @@ def create_shortlink(longlink, delay):
 
     return shortlink
 
-######### WEB PAGE ###########
+######### WEB PAGES ###########
 
 @app.route("/")
 def index():
@@ -97,4 +113,5 @@ def create():
     return create_shortlink(longlink=params["longlink"], delay=params["delay"])
 
 if __name__ == "__main__":
-    app.run("127.0.0.1", 2700)
+    prepare_database()
+    app.run("127.0.0.1", config.port)
